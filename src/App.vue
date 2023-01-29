@@ -69,7 +69,7 @@
           />
           <input
             id="search"
-            class="m-2 my-sm-0 px-2 py-1 rounded-pill bg-dark"
+            class="m-2 my-sm-0 px-2 py-1 rounded-pill bg-transparent"
             type="submit"
             value="ابحث"
           />
