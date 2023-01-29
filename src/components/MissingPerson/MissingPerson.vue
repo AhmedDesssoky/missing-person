@@ -103,10 +103,10 @@ export default {
 <style scoped>
 * {
   direction: rtl;
+  background-color: #112031 !important;
 }
 
 #regForm {
-  background-color: #ffffff;
   margin: 30px auto;
   padding: 40px;
   width: 70%;

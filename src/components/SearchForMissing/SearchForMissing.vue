@@ -80,6 +80,7 @@ export default {
 <style scoped>
 * {
   direction: rtl;
+  background-color: #112031 !important;
 }
 #nextBtn {
   background-color: #17a2b8;
