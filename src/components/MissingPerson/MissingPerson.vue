@@ -120,6 +120,7 @@ input {
   font-size: 17px;
   font-family: Raleway;
   border: 1px solid #aaaaaa;
+  color: #fff;
 }
 
 h1 {

@@ -82,6 +82,10 @@ export default {
   direction: rtl;
   background-color: #112031 !important;
 }
+input {
+  color: #fff !important  ;
+  border-color: #ccc !important;
+}
 #nextBtn {
   background-color: #17a2b8;
   border-color: #17a2b8;

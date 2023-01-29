@@ -107,7 +107,7 @@ body {
   background-color: #112031 !important;
 }
 input {
-  color: #fff !important  ;
+  color: #000 !important  ;
   border-color: #ccc !important;
 }
 input:focus {
