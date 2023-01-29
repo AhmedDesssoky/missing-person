@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import SignUp from "../views/Signup.vue";
 import LoginPage from "../views/Login.vue";
 import ErrPage from "../views/ErrPage.vue";
+import MainPage from "../views/Main.vue";
 import MissingPerson from "../views/MissingPerson.vue";
 import SearchMissing from "../views/SearchMissing.vue";
 import ContactUs from "../views/ContactUs";
@@ -12,6 +13,11 @@ import ThePersonPage from "../views/ThePerson";
 const routes = [
   {
     path: "/",
+    name: "MainPage",
+    component: MainPage,
+  },
+  {
+    path: "/thepersonpage",
     name: "ThePersonPage",
     component: ThePersonPage,
   },

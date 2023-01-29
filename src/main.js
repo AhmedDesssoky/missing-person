@@ -12,9 +12,23 @@ import {
   faEye,
   faUser,
   faLightbulb,
+  faGlasses,
+  faCheck,
+  faPerson,
+  faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faPhone, faBars, faEye, faUser, faLightbulb);
+library.add(
+  faPhone,
+  faBars,
+  faEye,
+  faUser,
+  faLightbulb,
+  faGlasses,
+  faCheck,
+  faPerson,
+  faHeadset
+);
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(store)
