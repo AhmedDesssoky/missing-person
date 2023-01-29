@@ -140,7 +140,7 @@ export default {
 }
 input:focus {
   outline: none !important;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 h3 {
   font-size: 30px;

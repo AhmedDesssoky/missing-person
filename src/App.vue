@@ -123,6 +123,7 @@ footer {
   background-position: 100% !important;
 }
 .btn {
+  text-align: center !important;
   color: white !important;
   background-color: #345b63;
   border-color: #d4ecdd;

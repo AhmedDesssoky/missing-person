@@ -130,6 +130,6 @@ input:visited {
 }
 input:focus {
   outline: none !important;
-  box-shadow: none;
+  box-shadow: none !important;
 }
 </style>
