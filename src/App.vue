@@ -107,8 +107,9 @@ body {
   background-color: #112031 !important;
 }
 input {
-  color: #000 !important  ;
+  color: #fff !important;
   border-color: #ccc !important;
+  background-color: #112031 !important;
 }
 input:focus {
   outline: none !important;
