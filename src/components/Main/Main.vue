@@ -57,4 +57,9 @@ export default {
   font-size: 50px !important;
   margin-top: 10px !important;
 }
+@media (max-width: 576px) {
+  body > section.img > div > p {
+    top: 0 !important;
+  }
+}
 </style>
