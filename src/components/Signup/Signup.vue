@@ -10,10 +10,11 @@
                 type="text"
                 class="form-control rounded-pill"
                 placeholder="الاسم الكامل"
+                @input="v$.name.$touch()"
                 v-model="name"
               />
-              <span class="error-feedback" v-if="v$.name.$error">{{
-                v$.name.$errors[0].$message
+              <span class="error-feedback text-danger" v-if="v$.name.$error">{{
+                nameErrorMessage(v$.name)
               }}</span>
             </div>
           </div>
@@ -23,11 +24,16 @@
                 type="email"
                 class="form-control rounded-pill"
                 placeholder="البريد الالكتروني"
+                @input="v$.email.$touch()"
                 v-model="email"
+                @keyup="handleKeyUp"
               />
-              <span class="error-feedback" v-if="v$.email.$error">{{
-                v$.email.$errors[0].$message
+              <span class="error-feedback text-danger" v-if="v$.email.$error">{{
+                emailErrorMessage(v$.email)
               }}</span>
+              <span class="error-feedback text-danger" v-if="emailTaken">
+                {{ emailTaken }}
+              </span>
             </div>
           </div>
           <div class="row align-items-center">
@@ -36,11 +42,14 @@
                 type="password"
                 class="form-control rounded-pill"
                 placeholder="كلمه المرور"
-                v-model="pass"
+                @input="v$.password.$touch()"
+                v-model="password"
               />
-              <span class="error-feedback" v-if="v$.pass.$error">{{
-                v$.pass.$errors[0].$message
-              }}</span>
+              <span
+                class="error-feedback text-danger"
+                v-if="v$.password.$error"
+                >{{ passwordErrorMessage(v$.password) }}</span
+              >
             </div>
           </div>
           <div class="row align-items-center">
@@ -82,14 +91,15 @@ export default {
     return {
       v$: useValidate(),
       name: "",
-      pass: "",
+      password: "",
       email: "",
+      emailTaken: "",
     };
   },
   validations() {
     return {
       name: { required, minLength: minLength(3) },
-      pass: { required, minLength: minLength(5) },
+      password: { required, minLength: minLength(6) },
       email: { email, required },
     };
   },
@@ -101,26 +111,54 @@ export default {
   },
   methods: {
     ...mapActions(["redirectTo"]),
+    nameErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    emailErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب ";
+      } else if (v.email.$invalid) {
+        return "الرجاء إدخال عنوان بريد إلكتروني صحيح";
+      }
+      return "";
+    },
+    passwordErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل.";
+      }
+      return "";
+    },
     async signup() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        let result = await axios.post("http://localhost:3000/users", {
-          name: this.name,
-          email: this.email,
-          pass: this.pass,
-        });
-        if (result.status == 201) {
-          // save data user in local storage
-          localStorage.setItem("user-Info", JSON.stringify(result.data));
-          // redirect to home page
-          this.redirectTo({ val: "HomePage" });
-        } else {
-          console.log("error add new user");
-        }
-        console.log("no error");
-      } else {
-        console.log("error");
+        axios
+          .post("https://missing-person.online/public/api/auth/register", {
+            name: this.name,
+            email: this.email,
+            password: this.password,
+          })
+
+          .then((response) => {
+            // save data user in local storage
+            localStorage.setItem("user-Info", JSON.stringify(response.data));
+            // redirect to home page
+            this.redirectTo({ val: "ThePerson" });
+          })
+          .catch((error) => {
+            // console.log(error.response.data);
+            this.emailTaken = error.response.data.email[0];
+          });
       }
+    },
+    handleKeyUp() {
+      this.emailTaken = "";
     },
   },
 };
@@ -144,8 +182,5 @@ input:focus {
 }
 h3 {
   font-size: 30px;
-}
-.error-feedback {
-  color: red !important;
 }
 </style>

@@ -11,23 +11,27 @@
                 class="form-control rounded-pill"
                 placeholder="البريد الالكتروني"
                 v-model="email"
+                @input="v$.email.$touch()"
               />
-              <span class="error-feedback" v-if="v$.email.$error">{{
-                v$.email.$errors[0].$message
+              <span class="error-feedback text-danger" v-if="v$.email.$error">{{
+                emailErrorMessage(v$.email)
               }}</span>
             </div>
           </div>
           <div class="row align-items-center">
-            <div class="form-group mx-auto col-8 d-block">
+            <div class="form-group mx-auto col-8 text-danger d-block">
               <input
                 type="password"
                 class="form-control rounded-pill"
                 placeholder="كلمه المرور"
-                v-model="pass"
+                @input="v$.password.$touch()"
+                v-model="password"
               />
-              <span class="error-feedback" v-if="v$.pass.$error">{{
-                v$.pass.$errors[0].$message
-              }}</span>
+              <span
+                class="error-feedback text-danger"
+                v-if="v$.password.$error"
+                >{{ passwordErrorMessage(v$.password) }}</span
+              >
             </div>
           </div>
           <div class="row align-items-cente">
@@ -52,7 +56,7 @@
             </div>
           </div>
           <div class="row g-3 align-items-center">
-            <div class="form-group col-auto mx-auto d-block">
+            <div class="form-group col-auto mx-auto d-block text-danger">
               {{ userNotFound }}
             </div>
           </div>
@@ -73,14 +77,14 @@ export default {
   data() {
     return {
       v$: useValidate(),
-      pass: "",
+      password: "",
       email: "",
       userNotFound: "",
     };
   },
   validations() {
     return {
-      pass: { required, minLength: minLength(5) },
+      password: { required, minLength: minLength(5) },
       email: { email, required },
     };
   },
@@ -92,21 +96,38 @@ export default {
   },
   methods: {
     ...mapActions(["redirectTo"]),
+    emailErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.email.$invalid) {
+        return "الرجاء إدخال عنوان بريد إلكتروني صحيح";
+      }
+      return "";
+    },
+    passwordErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن تحتوي كلمة المرور على 5 أحرف على الأقل.";
+      }
+      return "";
+    },
     async login() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        let result = await axios.get(
-          `http://localhost:3000/users?email=${this.email}&pass=${this.pass}`
-        );
-        if (result.status == 200 && result.data.length > 0) {
-          localStorage.setItem("user-Info", JSON.stringify(result.data[0]));
-          console.log(JSON.stringify(result.data));
-          this.redirectTo({ val: "ThePerson" });
-        } else {
-          this.userNotFound = "user not found";
-        }
-      } else {
-        console.log("error");
+        axios
+          .post("https://missing-person.online/public/api/auth/login", {
+            email: this.email,
+            password: this.password,
+          })
+          .then((response) => {
+            const token = response.data.access_token;
+            localStorage.setItem("token", token);
+            this.redirectTo({ val: "ThePerson" });
+          })
+          .catch(() => {
+            this.userNotFound = "المستخدم غير موجود ";
+          });
       }
     },
   },

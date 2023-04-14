@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <div class="container text-center">
+    <!-- <img src="@/assets/missing.png" alt="" srcset="" class="Us" /> -->
     <h1 class="text-center">missing person</h1>
     <h4 class="text-center">
       نحن نرسم ابتسامة, نمسح دمعة, ونُعيد الأمل المفقود
@@ -24,6 +25,9 @@ export default {
 </script>
 
 <style>
+.Us {
+  height: 150px;
+}
 h1 {
   color: rgb(254, 254, 255) !important;
   font: bold !important;

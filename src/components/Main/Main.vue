@@ -5,7 +5,7 @@
         <p>نحن نرسم ابتسامة, نمسح دمعة, ونُعيد الأمل المفقود</p>
       </div>
     </section>
-    <section class="text-center mt-5">
+    <!-- <section class="text-center mt-5">
       <div class="awso">
         <div class="container">
           <div class="row">
@@ -27,7 +27,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
   </body>
 </template>
 

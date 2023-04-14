@@ -17,8 +17,8 @@
       <router-link to="/" class="nav-link">
         <a
           class="navbar-brand brand d-flex justify-content-center align-items-center"
-          >logo</a
-        >
+          ><img src="@/assets/missing.png" alt="" srcset="" class="logo"
+        /></a>
       </router-link>
       <button
         class="navbar-toggler"
@@ -128,5 +128,8 @@ footer {
   color: white !important;
   /* background-color: #345b63;
   border-color: #d4ecdd; */
+}
+.logo {
+  height: 70px;
 }
 </style>

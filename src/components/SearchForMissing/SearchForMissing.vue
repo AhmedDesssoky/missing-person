@@ -5,12 +5,21 @@
   <div class="container border w-75">
     <div class="row justify-content-center">
       <div class="col-md-12">
-        <form action="">
-          <div class="form-group mt-3 text-right">
+        <form>
+          <div class="form-group mt-3 text-right col-12 mx-auto d-block">
             <h3 for="">التحقق اذا كان الشخص مفقود ام لا</h3>
-            <input type="file" class="form-control w-50" />
+            <input
+              type="file"
+              class="form-control py-1 rounded-pill"
+              @change="onFileChange"
+            />
+            <span
+              class="error-feedback text-danger float-lg-right"
+              v-if="v$.file.$error"
+              >{{ fileErrorMessage(v$.file) }}</span
+            >
           </div>
-          <div>
+          <div class="mt-3 form-group mt-3 text-right col-12 mx-auto d-block">
             <h2 class="text-right">-التعليمات للحصول علي جودة عالية</h2>
             <ul>
               <li>
@@ -38,8 +47,12 @@
           <div>
             <div style="overflow: auto">
               <div style="text-align: right">
-                <button type="submit" id="nextBtn" onclick="nextPrev(1)">
-                  ابحث
+                <button
+                  type="button"
+                  class="btn btn-info bg-info btn-block rounded-pill log w-25 text-white my-3"
+                  @click="search()"
+                >
+                  ابحث الأن
                 </button>
               </div>
             </div>
@@ -51,26 +64,38 @@
 </template>
 
 <script>
+// import { mapActions } from "vuex";
+// import axios from "axios";
+import useValidate from "@vuelidate/core";
+import { required } from "@vuelidate/validators";
 export default {
   data() {
     return {
-      previewImage: null,
+      v$: useValidate(),
+      file: null,
+    };
+  },
+  validations() {
+    return {
+      file: { required },
     };
   },
   methods: {
-    selectImage() {
-      this.$refs.fileInput.click();
+    onFileChange(event) {
+      this.file = event.target.files[0];
     },
-    pickFile() {
-      let input = this.$refs.fileInput;
-      let file = input.files;
-      if (file && file[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.previewImage = e.target.result;
-        };
-        reader.readAsDataURL(file[0]);
-        this.$emit("input", file[0]);
+    fileErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
+    search() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        console.log("no error");
+      } else {
+        console.log("error");
       }
     },
   },
@@ -79,8 +104,10 @@ export default {
 
 <style scoped>
 * {
-  direction: rtl;
-  background-color: #112031 !important;
+  text-decoration: rtl;
+  text-align: right;
+  overflow: hidden;
+  font-size: 20px;
 }
 input {
   color: #fff !important  ;

@@ -1,99 +1,298 @@
 <template>
-  <!-- <div class="container">
-    <h4 class="text-right">الإبلاغ عن شخص مفقود</h4>
-  </div> -->
-  <div id="regForm" action="">
-    <h1 style="text-align: center">بلغ عن شخص مفقود</h1>
-    <div class="tab">
-      <h1>بيانات الطفل</h1>
-      <p>
-        <input
-          type="text"
-          class="form-control"
-          value=""
-          placeholder="الأسم·الكامل"
-          required
-        />
-      </p>
-      <p><input placeholder="المحافظة" oninput="" /></p>
-      <p><input placeholder="المدينة" oninput="" /></p>
-      <p><input placeholder="العمر" oninput="" required /></p>
-      <div class="form-group-c1">
-        <h3>صورة الطفل</h3>
-        <br />
-        <br />
-        <div
-          class="imagePreviewWrapper"
-          :style="{ 'background-image': `url(${previewImage})` }"
-          @click="selectImage"
-        ></div>
+  <div class="" id="regForm">
+    <div class="row">
+      <div class="col-md-12 mx-auto mt-4">
+        <form>
+          <div class="row align-items-center">
+            <div class="form-group mx-auto col-12 d-block">
+              <h1>بيانات الطفل</h1>
+              <input
+                type="text"
+                class="form-control rounded-pill"
+                placeholder="الأسم الكامل"
+                @input="v$.name.$touch()"
+                v-model="name"
+              />
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.name.$error"
+                >{{ nameErrorMessage(v$.name) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group mx-auto col-12 d-block">
+              <input
+                type="text"
+                placeholder="المحافظة"
+                class="form-control rounded-pill"
+                @input="v$.governorate.$touch()"
+                v-model="governorate"
+              />
 
-        <input ref="fileInput" type="file" @input="pickFile" />
-      </div>
-      <div class="form-group-c2">
-        <h3>صورة شهادة الميلاد</h3>
-        <br />
-        <br />
-        <div
-          class="imagePreviewWrapper"
-          :style="{ 'background-image': `url(${previewImage})` }"
-          @click="selectImage"
-        ></div>
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.governorate.$error"
+                >{{ governorateErrorMessage(v$.governorate) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto d-block">
+              <input
+                type="text"
+                placeholder="المدينة"
+                class="form-control rounded-pill"
+                @input="v$.city.$touch()"
+                v-model="city"
+              />
 
-        <input ref="fileInput" type="file" @input="pickFile" />
-      </div>
-    </div>
-    <div class="tab">
-      <h1>بيانات ولي الأمر</h1>
-      <p><input placeholder="الأسم" oninput="this.className = ''" /></p>
-      <p><input placeholder="رقم الهاتف" oninput="this.className = ''" /></p>
-      <p><input placeholder="الرقم القومي" oninput="this.className = ''" /></p>
-      <p><input placeholder="العنوان " oninput="this.className = ''" /></p>
-    </div>
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.city.$error"
+                >{{ cityErrorMessage(v$.city) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto d-block">
+              <input
+                type="number"
+                placeholder="العمر"
+                class="form-control rounded-pill"
+                @input="v$.age.$touch()"
+                v-model="age"
+              />
 
-    <div class="form-group-c3">
-      <h3>صورة بطاقة ولي الأمر</h3>
-      <br />
-      <br />
-      <div
-        class="imagePreviewWrapper"
-        :style="{ 'background-image': `url(${previewImage})` }"
-        @click="selectImage"
-      ></div>
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.age.$error"
+                >{{ ageErrorMessage(v$.age) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto d-block">
+              <h3>صورة الطفل</h3>
+              <input
+                type="file"
+                class="form-control py-1 rounded-pill"
+                placeholder="اختر صوره"
+                @change="onFileChange"
+              />
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.file.$error"
+                >{{ fileErrorMessage(v$.file) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto d-block">
+              <h3>بيانات ولي الأمر</h3>
+              <input
+                type="text"
+                placeholder="الأسم"
+                class="form-control rounded-pill"
+                @input="v$.fatherName.$touch()"
+                v-model="fatherName"
+              />
 
-      <input ref="fileInput" type="file" @input="pickFile" />
-    </div>
-    <div style="overflow: auto">
-      <div style="float: right">
-        <button type="button" id="nextBtn" onclick="nextPrev(1)">
-          بلغ الأن
-        </button>
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.fatherName.$error"
+                >{{ fatherNameErrorMessage(v$.fatherName) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto d-block">
+              <input
+                type="number"
+                placeholder="رقم الهاتف"
+                class="form-control rounded-pill"
+                @input="v$.phone.$touch()"
+                v-model="phone"
+              />
+
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.phone.$error"
+                >{{ phoneErrorMessage(v$.phone) }}</span
+              >
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto d-block">
+              <input
+                type="number"
+                placeholder="الرقم القومي"
+                class="form-control rounded-pill"
+                @input="v$.nationalNumber.$touch()"
+                v-model="nationalNumber"
+              />
+
+              <span
+                class="error-feedback text-danger float-lg-right"
+                v-if="v$.nationalNumber.$error"
+                >{{ nationalNumberErrorMessage(v$.nationalNumber) }}</span
+              >
+            </div>
+          </div>
+
+          <div class="row align-items-center">
+            <div class="form-group col-12 mx-auto">
+              <button
+                type="button"
+                class="btn btn-info bg-info btn-block rounded-pill log w-25 text-white"
+                @click="store()"
+              >
+                بلغ الأن
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import axios from "axios";
+import useValidate from "@vuelidate/core";
+import { required, minLength, maxLength } from "@vuelidate/validators";
 export default {
   data() {
     return {
-      previewImage: null,
+      v$: useValidate(),
+      name: "",
+      governorate: "",
+      age: "",
+      city: "",
+      file: null,
+      fatherName: "",
+      phone: "",
+      nationalNumber: "",
+    };
+  },
+  validations() {
+    return {
+      name: { required, minLength: minLength(3) },
+      governorate: { required, minLength: minLength(5) },
+      age: { required },
+      city: { minLength: minLength(3), required },
+      file: { required },
+      fatherName: { required, minLength: minLength(3) },
+      phone: { required, minLength: minLength(11), maxLength: maxLength(11) },
+      nationalNumber: {
+        required,
+        minLength: minLength(14),
+        maxLength: maxLength(14),
+      },
     };
   },
   methods: {
-    selectImage() {
-      this.$refs.fileInput.click();
+    onFileChange(event) {
+      this.file = event.target.files[0];
     },
-    pickFile() {
-      let input = this.$refs.fileInput;
-      let file = input.files;
-      if (file && file[0]) {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-          this.previewImage = e.target.result;
-        };
-        reader.readAsDataURL(file[0]);
-        this.$emit("input", file[0]);
+    ...mapActions(["redirectTo"]),
+    nameErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    governorateErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 5 أحرف على الأقل.";
+      }
+      return "";
+    },
+    ageErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي العمر على رقم على الأقل.";
+      } else if (v.maxLength.$invalid) {
+        return "يجب أن يحتوي الاسم على رقمين على الاكثر.";
+      }
+      return "";
+    },
+    fileErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
+    cityErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    fatherNameErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    phoneErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 11 رقم على الأقل.";
+      } else if (v.maxLength.$invalid) {
+        return "يجب أن يحتوي الاسم على  11 رقم على الاكثر.";
+      }
+      return "";
+    },
+    nationalNumberErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم على 14 رقم على الأقل.";
+      } else if (v.maxLength.$invalid) {
+        return "يجب أن يحتوي الاسم على  14 رقم على الاكثر.";
+      }
+      return "";
+    },
+    store() {
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        const formData = new FormData();
+        formData.append("name", this.name);
+        formData.append("governorate", this.governorate);
+        formData.append("age", this.age);
+        formData.append("city", this.city);
+        formData.append("image", this.file);
+        formData.append("fatherName", this.fatherName);
+        formData.append("phone", this.phone);
+        formData.append("nationalNumber", this.nationalNumber);
+        const token = localStorage.getItem("token");
+        axios
+          .post("https://missing-person.online/public/api/store", formData, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            console.log(response.data);
+            this.redirectTo({ val: "ThePerson" });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("error");
       }
     },
   },
@@ -102,8 +301,15 @@ export default {
 
 <style scoped>
 * {
-  direction: rtl;
-  background-color: #112031 !important;
+  text-decoration: rtl;
+  text-align: right;
+  overflow: hidden;
+  font-size: 20px;
+}
+.log {
+  color: #24baef !important;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 #regForm {
@@ -158,5 +364,8 @@ input.invalid {
 .form-group-c1 {
   display: inline-block;
   width: 50%;
+}
+.btn {
+  color: #fff !important;
 }
 </style>
