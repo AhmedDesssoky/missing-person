@@ -79,12 +79,16 @@
                 class="form-control py-1 rounded-pill"
                 placeholder="اختر صوره"
                 @change="onFileChange"
+                @input="handleKeyUp"
               />
-              <span
+              <!-- <span
                 class="error-feedback text-danger float-lg-right"
                 v-if="v$.file.$error"
                 >{{ fileErrorMessage(v$.file) }}</span
-              >
+              > -->
+              <span class="error-feedback text-danger" v-if="imagerequred">
+                {{ imagerequred }}
+              </span>
             </div>
           </div>
           <div class="row align-items-center">
@@ -174,15 +178,16 @@ export default {
       fatherName: "",
       phone: "",
       nationalNumber: "",
+      imagerequred: "",
     };
   },
   validations() {
     return {
       name: { required, minLength: minLength(3) },
       governorate: { required, minLength: minLength(5) },
-      age: { required },
+      age: { required, minLength: minLength(1), maxLength: maxLength(2) },
       city: { minLength: minLength(3), required },
-      file: { required },
+      // file: { required },
       fatherName: { required, minLength: minLength(3) },
       phone: { required, minLength: minLength(11), maxLength: maxLength(11) },
       nationalNumber: {
@@ -209,7 +214,7 @@ export default {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
       } else if (v.minLength.$invalid) {
-        return "يجب أن يحتوي الاسم على 5 أحرف على الأقل.";
+        return "يجب أن تحتوي المحافظه على 3 أحرف على الأقل.";
       }
       return "";
     },
@@ -219,21 +224,21 @@ export default {
       } else if (v.minLength.$invalid) {
         return "يجب أن يحتوي العمر على رقم على الأقل.";
       } else if (v.maxLength.$invalid) {
-        return "يجب أن يحتوي الاسم على رقمين على الاكثر.";
+        return "يجب أن يحتوي العمر على رقمين على الاكثر.";
       }
       return "";
     },
-    fileErrorMessage(v) {
-      if (v.required.$invalid) {
-        return "هذا الحقل مطلوب";
-      }
-      return "";
-    },
+    // fileErrorMessage(v) {
+    //   if (v.required.$invalid) {
+    //     return "هذا الحقل مطلوب";
+    //   }
+    //   return "";
+    // },
     cityErrorMessage(v) {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
       } else if (v.minLength.$invalid) {
-        return "يجب أن يحتوي الاسم على 3 أحرف على الأقل.";
+        return "يجب أن تحتوي المدينة على 3 أحرف على الأقل.";
       }
       return "";
     },
@@ -241,7 +246,7 @@ export default {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
       } else if (v.minLength.$invalid) {
-        return "يجب أن يحتوي الاسم على 3 أحرف على الأقل.";
+        return "يجب أن يحتوي اسم الاب على 3 أحرف على الأقل.";
       }
       return "";
     },
@@ -249,9 +254,9 @@ export default {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
       } else if (v.minLength.$invalid) {
-        return "يجب أن يحتوي الاسم على 11 رقم على الأقل.";
+        return "يجب أن يحتوي رقم الهاتف على 11 رقم على الأقل.";
       } else if (v.maxLength.$invalid) {
-        return "يجب أن يحتوي الاسم على  11 رقم على الاكثر.";
+        return "يجب أن يحتوي رقم الهاتف على  11 رقم على الاكثر.";
       }
       return "";
     },
@@ -259,9 +264,9 @@ export default {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
       } else if (v.minLength.$invalid) {
-        return "يجب أن يحتوي الاسم على 14 رقم على الأقل.";
+        return "يجب أن يحتوي الرقم القومي على 14 رقم على الأقل.";
       } else if (v.maxLength.$invalid) {
-        return "يجب أن يحتوي الاسم على  14 رقم على الاكثر.";
+        return "يجب أن يحتوي الرقم القومي على  14 رقم على الاكثر.";
       }
       return "";
     },
@@ -289,11 +294,17 @@ export default {
             this.redirectTo({ val: "ThePerson" });
           })
           .catch((error) => {
-            console.log(error);
+            console.log(error.response.data.message.image);
+
+            this.imagerequred = error.response.data.message.image[0];
+            // this.imagefail = error.response.data.message.image[1];
           });
       } else {
         console.log("error");
       }
+    },
+    handleKeyUp() {
+      this.imagerequred = "";
     },
   },
 };
