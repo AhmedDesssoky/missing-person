@@ -108,7 +108,7 @@ export default {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
       } else if (v.minLength.$invalid) {
-        return "يجب أن تحتوي كلمة المرور على 5 أحرف على الأقل.";
+        return "يجب أن تحتوي كلمة المرور على 6 أحرف على الأقل.";
       }
       return "";
     },
