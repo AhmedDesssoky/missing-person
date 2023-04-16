@@ -8,7 +8,7 @@
       <!-- <div class="container">
         <div class="row"> -->
       <div class="col-6 mt-5 text-right">
-        <form class="row g-3 needs-validation" novalidate>
+        <form class="row g-3 needs-validation" @click.prevent>
           <div class="col-md-6">
             <label for="validationCustom01" class="form-label"
               >الاسم الاول</label
@@ -17,11 +17,14 @@
               type="text"
               class="form-control"
               id="validationCustom01"
-              value=""
-              placeholder="الاسم الاول"
-              required
+              v-model="firstName"
+              @input="v$.firstName.$touch()"
             />
-            <div class="valid-feedback">Looks good!</div>
+            <span
+              class="error-feedback text-danger"
+              v-if="v$.firstName.$error"
+              >{{ firstnameErrorMessage(v$.firstName) }}</span
+            >
           </div>
           <div class="col-md-6 text-right">
             <label for="validationCustom02" class="form-label"
@@ -31,81 +34,85 @@
               type="text"
               class="form-control"
               id="validationCustom02"
-              value=""
-              placeholder="الاسم الاخير"
-              required
+              v-model="lastName"
+              @input="v$.lastName.$touch()"
             />
-            <div class="valid-feedback">Looks good!</div>
+            <span
+              class="error-feedback text-danger"
+              v-if="v$.lastName.$error"
+              >{{ lastnameErrorMessage(v$.lastName) }}</span
+            >
           </div>
           <br />
-          <div class="col-md-12">
+          <div class="col-md-12 mt-3">
             <label for="validationCustomUsername" class="form-label"
-              >الايميل</label
+              >البريد الالكتروني</label
             >
             <div class="input-group has-validation">
-              <span class="input-group-text" id="inputGroupPrepend">@</span>
               <input
-                type="text"
+                type="email"
                 class="form-control"
-                placeholder="@gmail.com"
                 id="validationCustomUsername"
                 aria-describedby="inputGroupPrepend"
-                required
+                v-model="email"
+                @input="v$.email.$touch()"
               />
-              <div class="invalid-feedback">Please choose a username.</div>
             </div>
+            <span class="error-feedback text-danger" v-if="v$.email.$error">{{
+              emailErrorMessage(v$.email)
+            }}</span>
           </div>
-          <div class="col-md-8">
+          <div class="col-md-8 mt-3">
             <label for="validationCustom03" class="form-label">المدينة</label>
             <input
               type="text"
               class="form-control"
               id="validationCustom03"
-              required
+              v-model="city"
+              @input="v$.city.$touch()"
             />
-            <div class="invalid-feedback">Please provide a valid city.</div>
+            <span class="error-feedback text-danger" v-if="v$.city.$error">{{
+              cityErrorMessage(v$.city)
+            }}</span>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 mt-3">
             <label for="validationCustom03" class="form-label">المحافظة</label>
             <input
               type="text"
               class="form-control"
               id="validationCustom03"
-              required
+              v-model="governorate"
+              @input="v$.governorate.$touch()"
             />
-            <div class="invalid-feedback">Please provide a valid city.</div>
+            <span
+              class="error-feedback text-danger"
+              v-if="v$.governorate.$error"
+              >{{ govErrorMessage(v$.governorate) }}</span
+            >
           </div>
-          <div class="col-md-10">
+          <div class="col-md-10 mt-3">
             <label for="validationCustom05" class="form-label"
               >الابلاغ عن مشكلة</label
             >
-            <input
+            <textarea
+              name=""
+              id="validationCustom03"
+              cols="10"
+              rows="5"
               type="text"
               class="form-control"
-              id="validationCustom05"
-              required
-            />
-            <div class="invalid-feedback">Please provide a valid zip.</div>
+              v-model="desc"
+              @input="v$.desc.$touch()"
+            >
+            </textarea>
+            <span class="error-feedback text-danger" v-if="v$.desc.$error">{{
+              descErrorMessage(v$.desc)
+            }}</span>
           </div>
-          <div class="col-12 text-right">
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="invalidCheck"
-                required
-              />
-              <label class="form-check-label" for="invalidCheck">
-                &nbsp;&nbsp;&nbsp;&nbsp;الموافقة علي الخصوصية
-              </label>
-              <div class="invalid-feedback">
-                You must agree before submitting.
-              </div>
-            </div>
-          </div>
-          <div class="col-4 text-right mt-2">
-            <button class="btn btn-primary" type="submit">تسجيل</button>
+          <div class="col-4 text-right mt-3">
+            <button class="btn btn-primary" type="submit" @click="contact()">
+              تسجيل
+            </button>
           </div>
         </form>
       </div>
@@ -119,9 +126,99 @@
 </template>
 
 <script>
+import useValidate from "@vuelidate/core";
+import { required, email, minLength } from "@vuelidate/validators";
 export default {
   name: "ContactUsPage",
+
+  data() {
+    return {
+      v$: useValidate(),
+      firstName: "",
+      lastName: "",
+      email: "",
+      city: "",
+      governorate: "",
+      desc: "",
+      check: "",
+    };
+  },
+  validations() {
+    return {
+      firstName: { required, minLength: minLength(5) },
+      lastName: { required, minLength: minLength(5) },
+      email: { email, required },
+      city: { required, minLength: minLength(5) },
+      governorate: { required, minLength: minLength(5) },
+      desc: { required, minLength: minLength(5) },
+      check: { required, minLength: minLength(5) },
+    };
+  },
+  methods: {
+    firstnameErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم الاول على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    lastnameErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن يحتوي الاسم الاخير على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    emailErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.email.$invalid) {
+        return "الرجاء إدخال عنوان بريد إلكتروني صحيح";
+      }
+      return "";
+    },
+    cityErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن تحتوي المدينة على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    govErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن تحتوي المحافظة على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    descErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      } else if (v.minLength.$invalid) {
+        return "يجب أن تحتوي المحافظة على 3 أحرف على الأقل.";
+      }
+      return "";
+    },
+    checkErrorMessage(v) {
+      if (v.required.$invalid) {
+        return "هذا الحقل مطلوب";
+      }
+      return "";
+    },
+
+    contact() {
+      this.v$.$validate();
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+textarea {
+  background-color: #112031 !important;
+}
+</style>
