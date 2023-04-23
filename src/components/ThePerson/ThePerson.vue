@@ -7,177 +7,89 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div>
+      <!-- <ul>
+        <li v-for="item in items.data" :key="item.id">
+            <h3 class="text-dark">الاسم :{{ item.name }}</h3>
+        </li>
+      </ul> -->
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
+        <div class="col-md-3" v-for="item in items.data" :key="item.id">
+          <div class="card">
+            <img :src="image + item.image" class="img-fluid" alt="..." />
+            <h3 class="text-dark">الاسم :{{ item.name }}</h3>
+            <button
+              type="button"
+              class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModal"
+              @click="showDetails(item)"
+            >
+              المزيد عن الشخص
+            </button>
             <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row">
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/3.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
-          <div class="card" style="width: 18rem">
-            <img src="@/assets/4.jpg" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h4 class="card-title">الحالة: مفقود</h4>
-              <p class="card-text">اسم الشخص<br />:تاريخ الميلاد</p>
-              <a href="#" class="btn btn-primary">المزيد عن الشخص</a>
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div
+                        class="d-flex align-item-center justify-content-between"
+                      >
+                        <h3 class="text-dark">
+                          الاسم :{{ selectedItem.name }}
+                        </h3>
+                        <h3 class="text-dark">
+                          المحافظه :{{ selectedItem.governorate }}
+                        </h3>
+                      </div>
+                      <div
+                        class="d-flex align-item-center justify-content-between"
+                      >
+                        <h3 class="text-dark">
+                          المدينه :{{ selectedItem.city }}
+                        </h3>
+                        <h3 class="text-dark">العمر :{{ selectedItem.age }}</h3>
+                      </div>
+                      <div
+                        class="d-flex align-item-center justify-content-between"
+                      >
+                        <h3 class="text-dark">
+                          اسم الاب :{{ selectedItem.fatherName }}
+                        </h3>
+
+                        <h3 class="text-dark">
+                          الهاتف :{{ selectedItem.phone }}
+                        </h3>
+                      </div>
+                      <div
+                        class="d-flex align-item-center justify-content-between"
+                      >
+                        <h3 class="text-dark">
+                          الرقم القومي :{{ selectedItem.nationalNumber }}
+                        </h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -187,8 +99,40 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "ThePerson",
+  data() {
+    return {
+      showModal: false,
+      selectedItem: {},
+      items: [],
+      image: "https://missing-person.online/public/images/",
+    };
+  },
+  mounted() {
+    const token = localStorage.getItem("token");
+    axios
+      .get("https://missing-person.online/public/api/missing", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        this.items = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  methods: {
+    showDetails(item) {
+      this.selectedItem = item;
+      console.log(this.selectedItem);
+      this.showModal = true;
+    },
+  },
 };
 </script>
 
@@ -231,5 +175,8 @@ h5 {
 .card-text {
   color: white;
   font-family: Verdana, Geneva, Tahoma, sans-serif\;;
+}
+#exampleModal > div > div > div.modal-header > button > span {
+  color: black !important;
 }
 </style>

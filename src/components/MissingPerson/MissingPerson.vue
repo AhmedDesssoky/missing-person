@@ -112,7 +112,7 @@
           <div class="row align-items-center">
             <div class="form-group col-12 mx-auto d-block">
               <input
-                type="number"
+                type="tel"
                 placeholder="رقم الهاتف"
                 class="form-control rounded-pill"
                 @input="v$.phone.$touch()"
@@ -129,7 +129,7 @@
           <div class="row align-items-center">
             <div class="form-group col-12 mx-auto d-block">
               <input
-                type="number"
+                type="tel"
                 placeholder="الرقم القومي"
                 class="form-control rounded-pill"
                 @input="v$.nationalNumber.$touch()"
@@ -165,7 +165,7 @@
 import { mapActions } from "vuex";
 import axios from "axios";
 import useValidate from "@vuelidate/core";
-import { required, minLength, maxLength } from "@vuelidate/validators";
+import { required, minLength, maxLength, numeric } from "@vuelidate/validators";
 export default {
   data() {
     return {
@@ -184,14 +184,20 @@ export default {
   validations() {
     return {
       name: { required, minLength: minLength(3) },
-      governorate: { required, minLength: minLength(5) },
+      governorate: { required, minLength: minLength(3) },
       age: { required, minLength: minLength(1), maxLength: maxLength(2) },
       city: { minLength: minLength(3), required },
       // file: { required },
       fatherName: { required, minLength: minLength(3) },
-      phone: { required, minLength: minLength(11), maxLength: maxLength(11) },
+      phone: {
+        required,
+        numeric,
+        minLength: minLength(11),
+        maxLength: maxLength(11),
+      },
       nationalNumber: {
         required,
+        numeric,
         minLength: minLength(14),
         maxLength: maxLength(14),
       },
@@ -253,6 +259,8 @@ export default {
     phoneErrorMessage(v) {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
+      } else if (v.numeric.$invalid) {
+        return "يرجى إدخال رقم صحيح";
       } else if (v.minLength.$invalid) {
         return "يجب أن يحتوي رقم الهاتف على 11 رقم على الأقل.";
       } else if (v.maxLength.$invalid) {
@@ -263,6 +271,8 @@ export default {
     nationalNumberErrorMessage(v) {
       if (v.required.$invalid) {
         return "هذا الحقل مطلوب";
+      } else if (v.numeric.$invalid) {
+        return "يرجى إدخال رقم صحيح";
       } else if (v.minLength.$invalid) {
         return "يجب أن يحتوي الرقم القومي على 14 رقم على الأقل.";
       } else if (v.maxLength.$invalid) {
