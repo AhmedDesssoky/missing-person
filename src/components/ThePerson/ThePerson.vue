@@ -18,11 +18,20 @@
       <div class="row">
         <div class="col-md-3" v-for="item in items.data" :key="item.id">
           <div class="card">
-            <img :src="image + item.image" class="img-fluid" alt="..." />
-            <h3 class="text-dark">الاسم :{{ item.name }}</h3>
-            <button
+            <img :src="image + item.image" class="img-fluid image" alt="..." />
+            <h3 class="text-white text-right p-2">الاسم : {{ item.name }}</h3>
+            <!-- <button
               type="button"
               class="btn btn-primary"
+              data-toggle="modal"
+              data-target="#exampleModal"
+              @click="showDetails(item)"
+            >
+              المزيد عن الشخص
+            </button> -->
+            <button
+              type="button"
+              class="btn btn-info btn-block log text-white"
               data-toggle="modal"
               data-target="#exampleModal"
               @click="showDetails(item)"
@@ -50,8 +59,14 @@
                       </button>
                     </div>
                     <div class="modal-body">
+                      <img
+                        :src="image + selectedItem.image"
+                        class="img-fluid image-detail"
+                        alt="..."
+                      />
+
                       <div
-                        class="d-flex align-item-center justify-content-between"
+                        class="mt-3 d-flex align-item-center justify-content-between"
                       >
                         <h3 class="text-dark">
                           الاسم :{{ selectedItem.name }}
@@ -119,17 +134,13 @@ export default {
         },
       })
       .then((response) => {
-        console.log(response.data);
         this.items = response.data;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch(() => {});
   },
   methods: {
     showDetails(item) {
       this.selectedItem = item;
-      console.log(this.selectedItem);
       this.showModal = true;
     },
   },
@@ -152,19 +163,7 @@ h5 {
   text-align-last: center;
   padding: 10px 15px;
   margin-top: 20px;
-  size: 50%;
 }
-.btn {
-  text-align-last: center;
-  font-size: 10px;
-  font-style: oblique;
-  border-radius: 10px;
-  padding: 10px 15px;
-  width: 200px;
-  height: 40px;
-  text-align: center;
-}
-
 .card-title {
   font-family: Verdana, Geneva, Tahoma, sans-serif !important;
   font-weight: 20px !important;
@@ -178,5 +177,26 @@ h5 {
 }
 #exampleModal > div > div > div.modal-header > button > span {
   color: black !important;
+}
+.modal-content {
+  /* height: 70; */
+  width: 600px;
+  margin-top: 100px;
+}
+.log {
+  font-size: 16px;
+  font-weight: bold;
+}
+.btn {
+  color: #fff !important;
+}
+.image {
+  max-width: 100%;
+  height: 200px !important;
+  object-fit: cover;
+}
+.image-detail {
+  height: 400px !important;
+  object-fit: cover;
 }
 </style>
