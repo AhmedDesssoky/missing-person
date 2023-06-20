@@ -11,9 +11,8 @@ export default {
     LoginForm,
   },
   async mounted() {
-    let user = localStorage.getItem("user-Info");
     let token = localStorage.getItem("token");
-    if (user || token) {
+    if (token) {
       this.redirectTo({ val: "MainPage" });
     }
   },

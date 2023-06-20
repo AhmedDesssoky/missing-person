@@ -147,9 +147,10 @@ export default {
 
           .then((response) => {
             // save data user in local storage
-            localStorage.setItem("user-Info", JSON.stringify(response.data));
+            // localStorage.setItem("user-Info", JSON.stringify(response.data));
+            console.log(response);
             // redirect to home page
-            this.redirectTo({ val: "ThePerson" });
+            this.redirectTo({ val: "LoginPage" });
           })
           .catch((error) => {
             // console.log(error.response.data);

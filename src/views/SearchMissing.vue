@@ -9,13 +9,9 @@ export default {
   name: "SearchMissingPage",
   components: { SearchMissing },
   async mounted() {
-    let user = localStorage.getItem("user-Info");
     let token = localStorage.getItem("token");
-    if (!user && !token) {
+    if (!token) {
       this.redirectTo({ val: "SignUp" });
-    } else {
-      this.username = JSON.parse(user).name;
-      this.userId = JSON.parse(user).id;
     }
   },
   methods: {

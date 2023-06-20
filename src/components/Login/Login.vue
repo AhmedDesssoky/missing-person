@@ -88,12 +88,12 @@ export default {
       email: { email, required },
     };
   },
-  mounted() {
-    let user = localStorage.getItem("user-Info");
-    if (user) {
-      this.redirectTo({ val: "ThePerson" });
-    }
-  },
+  // mounted() {
+  //   let user = localStorage.getItem("user-Info");
+  //   if (user) {
+  //     this.redirectTo({ val: "ThePerson" });
+  //   }
+  // },
   methods: {
     ...mapActions(["redirectTo"]),
     emailErrorMessage(v) {
