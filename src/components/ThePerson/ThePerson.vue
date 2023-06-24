@@ -15,13 +15,13 @@
       </ul> -->
     </div>
     <div class="container">
+      <input
+        type="text"
+        class="form-control w-50 my-4 mr-sm-4 rounded-pill"
+        v-model="searchQuery"
+        placeholder="ابحث عن شخص مفقود"
+      />
       <div class="row">
-        <input
-          type="text"
-          class="form-control w-50 my-4 mr-sm-4 rounded-pill"
-          v-model="searchQuery"
-          placeholder="ابحث عن شخص مفقود"
-        />
         <div class="col-md-3" v-for="item in filteredItems" :key="item.id">
           <div class="card">
             <img :src="image + item.image" class="img-fluid image" alt="..." />
@@ -217,16 +217,15 @@ export default {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((response) => {
-          console.log(response.data);
-          this.redirectTo({ val: "ThePerson" });
+        .then(() => {
+          this.fetchData();
+          // this.redirectTo({ val: "ThePerson" });
         })
         .catch((error) => {
           // Handle error
           console.error("Error deleting item", error);
           // Perform any necessary error handling
         });
-      this.fetchData();
     },
     fetchData() {
       const token = localStorage.getItem("token");
@@ -237,7 +236,7 @@ export default {
           },
         })
         .then((response) => {
-          this.items = response.data;
+          this.items = response.data.data;
         })
         .catch(() => {});
     },
