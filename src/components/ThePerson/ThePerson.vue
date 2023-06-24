@@ -4,7 +4,6 @@
       <div class="row">
         <div class="col-12">
           <h5 class="mt-5">الاشخاص المفقودون</h5>
-          <p v-if="isOwner">{{ user.id }}</p>
         </div>
       </div>
     </div>
@@ -17,7 +16,13 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col-md-3" v-for="item in items.data" :key="item.id">
+        <input
+          type="text"
+          class="form-control w-50 my-4 mr-sm-4 rounded-pill"
+          v-model="searchQuery"
+          placeholder="Search"
+        />
+        <div class="col-md-3" v-for="item in filteredItems" :key="item.id">
           <div class="card">
             <img :src="image + item.image" class="img-fluid image" alt="..." />
             <h3 class="text-white text-right p-2">الاسم : {{ item.name }}</h3>
@@ -151,6 +156,7 @@ export default {
       selectedItem: {},
       items: [],
       image: "https://missing-person.online/public/images/",
+      searchQuery: "",
     };
   },
   mounted() {
@@ -173,9 +179,21 @@ export default {
         },
       })
       .then((response) => {
-        this.items = response.data;
+        this.items = response.data.data;
       })
       .catch(() => {});
+  },
+  computed: {
+    filteredItems() {
+      if (this.searchQuery === "") {
+        return this.items; // Return all items when search query is empty
+      }
+
+      const query = this.searchQuery.toLowerCase();
+      return this.items.filter((item) =>
+        item.name.toLowerCase().includes(query)
+      );
+    },
   },
   methods: {
     ...mapActions(["redirectTo"]),
