@@ -9,6 +9,7 @@ import ContactUs from "../views/ContactUs";
 import Aboutus from "../views/Aboutus";
 import ThePerson from "../views/ThePerson";
 import ThePersonPage from "../views/ThePerson";
+import updateMissing from "../components/MissingPerson/UpdateMissing.vue";
 
 const routes = [
   {
@@ -56,6 +57,12 @@ const routes = [
     name: "ThePerson",
     component: ThePerson,
   },
+  {
+    path: "/update-missing",
+    name: "updateMissing",
+    component: updateMissing,
+  },
+
   // stays last
   {
     path: "/:catchAll(.*)",

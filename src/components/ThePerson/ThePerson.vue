@@ -4,6 +4,7 @@
       <div class="row">
         <div class="col-12">
           <h5 class="mt-5">الاشخاص المفقودون</h5>
+          <p v-if="isOwner">{{ user.id }}</p>
         </div>
       </div>
     </div>
@@ -38,6 +39,30 @@
             >
               المزيد عن الشخص
             </button>
+            <!-- <button
+              type="button"
+              class="btn btn-info btn-block log text-white"
+              @click="updateMissing(selectedItem.id)"
+            >
+              تعديل
+            </button> -->
+            <div
+              v-if="this.user.id === item.user_id"
+              class="d-flex align-items-center justify-content-around mt-1"
+            >
+              <router-link
+                class="btn btn-info bg-info btn-block rounded-pill log w-25 text-white"
+                :to="{ path: '/update-missing', query: { id: item.id } }"
+                >تعديل</router-link
+              >
+              <button
+                class="btn btn-danger bg-danger btn-block rounded-pill log w-25 text-white"
+                @click="deleteMissing(item)"
+              >
+                حذف
+              </button>
+            </div>
+
             <div class="card-body">
               <div
                 class="modal fade"
@@ -115,10 +140,13 @@
 
 <script>
 import axios from "axios";
+import { mapActions } from "vuex";
 export default {
   name: "ThePerson",
   data() {
     return {
+      isOwner: false,
+      user: [],
       showModal: false,
       selectedItem: {},
       items: [],
@@ -127,6 +155,17 @@ export default {
   },
   mounted() {
     const token = localStorage.getItem("token");
+    axios
+      .get("https://missing-person.online/public/api/auth/user-profile", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response.data.id);
+        this.user = response.data;
+      })
+      .catch(() => {});
     axios
       .get("https://missing-person.online/public/api/missing", {
         headers: {
@@ -139,9 +178,50 @@ export default {
       .catch(() => {});
   },
   methods: {
+    ...mapActions(["redirectTo"]),
     showDetails(item) {
+      console.log(this.user);
       this.selectedItem = item;
+      console.log(this.selectedItem);
       this.showModal = true;
+      this.fetchData();
+    },
+    updateMissing() {
+      this.redirectTo({ val: "updateMissing" });
+    },
+    deleteMissing(item) {
+      const token = localStorage.getItem("token");
+      this.selectedItem = item;
+
+      axios
+        .delete(`https://missing-person.online/public/api/missing/${item.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.redirectTo({ val: "ThePerson" });
+        })
+        .catch((error) => {
+          // Handle error
+          console.error("Error deleting item", error);
+          // Perform any necessary error handling
+        });
+      this.fetchData();
+    },
+    fetchData() {
+      const token = localStorage.getItem("token");
+      axios
+        .get("https://missing-person.online/public/api/missing", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          this.items = response.data;
+        })
+        .catch(() => {});
     },
   },
 };
