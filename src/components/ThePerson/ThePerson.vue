@@ -20,7 +20,7 @@
           type="text"
           class="form-control w-50 my-4 mr-sm-4 rounded-pill"
           v-model="searchQuery"
-          placeholder="Search"
+          placeholder="ابحث عن شخص مفقود"
         />
         <div class="col-md-3" v-for="item in filteredItems" :key="item.id">
           <div class="card">
