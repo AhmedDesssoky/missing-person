@@ -68,7 +68,11 @@
               </button>
             </div>
 
+<<<<<<< HEAD
             <div class="card-body pop_up">
+=======
+            <div class="card-body">
+>>>>>>> 6038755dd3db8031fad2fa72e11bf6b4d6937569
               <div
                 class="modal fade"
                 id="exampleModal"
@@ -96,7 +100,11 @@
                       />
 
                       <div
+<<<<<<< HEAD
                         class="mt-3 d-flex align-item-center justify-content-between mobil"
+=======
+                        class="mt-3 d-flex align-item-center justify-content-between"
+>>>>>>> 6038755dd3db8031fad2fa72e11bf6b4d6937569
                       >
                         <h3 class="text-dark">
                           الاسم :{{ selectedItem.name }}
@@ -106,7 +114,11 @@
                         </h3>
                       </div>
                       <div
+<<<<<<< HEAD
                         class="d-flex align-item-center justify-content-between mobil"
+=======
+                        class="d-flex align-item-center justify-content-between"
+>>>>>>> 6038755dd3db8031fad2fa72e11bf6b4d6937569
                       >
                         <h3 class="text-dark">
                           المدينه :{{ selectedItem.city }}
@@ -114,7 +126,11 @@
                         <h3 class="text-dark">العمر :{{ selectedItem.age }}</h3>
                       </div>
                       <div
+<<<<<<< HEAD
                         class="d-flex align-item-center justify-content-between mobil"
+=======
+                        class="d-flex align-item-center justify-content-between"
+>>>>>>> 6038755dd3db8031fad2fa72e11bf6b4d6937569
                       >
                         <h3 class="text-dark">
                           اسم الاب :{{ selectedItem.fatherName }}
@@ -125,7 +141,11 @@
                         </h3>
                       </div>
                       <div
+<<<<<<< HEAD
                         class="d-flex align-item-center justify-content-between mobil"
+=======
+                        class="d-flex align-item-center justify-content-between"
+>>>>>>> 6038755dd3db8031fad2fa72e11bf6b4d6937569
                       >
                         <h3 class="text-dark">
                           الرقم القومي :{{ selectedItem.nationalNumber }}
@@ -296,6 +316,7 @@ h5 {
   height: 400px !important;
   object-fit: cover;
 }
+<<<<<<< HEAD
 @media only screen and (max-width: 600px) {
   .modal-content {
     width: 300px !important;
@@ -312,4 +333,6 @@ h5 {
     justify-content: right !important;
   }
 }
+=======
+>>>>>>> 6038755dd3db8031fad2fa72e11bf6b4d6937569
 </style>
