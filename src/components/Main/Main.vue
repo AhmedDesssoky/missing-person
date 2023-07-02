@@ -2,7 +2,7 @@
   <body>
     <section class="img">
       <div class="overlay">
-        <p>نحن نرسم ابتسامة, نمسح دمعة, ونُعيد الأمل المفقود</p>
+        <p>انضم إلينا في جهودنا لإيجاد الأطفال المفقودين وتوفير بيئةآمنة لهم</p>
       </div>
     </section>
     <!-- <section class="text-center mt-5">

@@ -7,8 +7,13 @@
     <div class="row">
       <!-- <div class="container">
         <div class="row"> -->
-      <div class="col-6 mt-5 text-right">
-        <form class="row g-3 needs-validation" @click.prevent>
+      <div class="col-md-6 col-xs-7 col-sm-6 col-lg-6 mt-5 text-right">
+        <form
+          ref="form"
+          @submit.prevent="sendEmail"
+          class="row g-3 needs-validation"
+          @click.prevent
+        >
           <div class="col-md-6">
             <label for="validationCustom01" class="form-label"
               >الاسم الاول</label
@@ -18,6 +23,7 @@
               class="form-control"
               id="validationCustom01"
               v-model="firstName"
+              name="user_name"
               @input="v$.firstName.$touch()"
             />
             <span
@@ -34,6 +40,7 @@
               type="text"
               class="form-control"
               id="validationCustom02"
+              name="user_name1"
               v-model="lastName"
               @input="v$.lastName.$touch()"
             />
@@ -54,6 +61,7 @@
                 class="form-control"
                 id="validationCustomUsername"
                 aria-describedby="inputGroupPrepend"
+                name="user_email"
                 v-model="email"
                 @input="v$.email.$touch()"
               />
@@ -68,6 +76,7 @@
               type="text"
               class="form-control"
               id="validationCustom03"
+              name="city"
               v-model="city"
               @input="v$.city.$touch()"
             />
@@ -81,6 +90,7 @@
               type="text"
               class="form-control"
               id="validationCustom03"
+              name="governorate"
               v-model="governorate"
               @input="v$.governorate.$touch()"
             />
@@ -95,12 +105,12 @@
               >الابلاغ عن مشكلة</label
             >
             <textarea
-              name=""
               id="validationCustom03"
               cols="10"
               rows="5"
               type="text"
               class="form-control"
+              name="massege"
               v-model="desc"
               @input="v$.desc.$touch()"
             >
@@ -110,14 +120,22 @@
             }}</span>
           </div>
           <div class="col-4 text-right mt-3">
-            <button class="btn btn-primary" type="submit" @click="contact()">
+            <button
+              class="btn btn-primary"
+              type="submit"
+              value="send"
+              @click="sendEmail"
+            >
               تسجيل
             </button>
           </div>
         </form>
+        <p class="alert mt-4 text-white">
+          {{ message }}
+        </p>
       </div>
-      <div class="col-6">
-        <img src="@/assets/1.jpg" width="500" height="500" alt="" />
+      <div class="col-6 col-xs-5 col-sm-6 col-lg-6">
+        <img src="@/assets/1.jpg" alt="" class="fixed" />
       </div>
     </div>
   </div>
@@ -128,6 +146,7 @@
 <script>
 import useValidate from "@vuelidate/core";
 import { required, email, minLength } from "@vuelidate/validators";
+import emailjs from "emailjs-com";
 export default {
   name: "ContactUsPage",
 
@@ -141,17 +160,18 @@ export default {
       governorate: "",
       desc: "",
       check: "",
+      message: "",
     };
   },
   validations() {
     return {
-      firstName: { required, minLength: minLength(5) },
-      lastName: { required, minLength: minLength(5) },
+      firstName: { required, minLength: minLength(3) },
+      lastName: { required, minLength: minLength(3) },
       email: { email, required },
-      city: { required, minLength: minLength(5) },
-      governorate: { required, minLength: minLength(5) },
-      desc: { required, minLength: minLength(5) },
-      check: { required, minLength: minLength(5) },
+      city: { required, minLength: minLength(3) },
+      governorate: { required, minLength: minLength(3) },
+      desc: { required, minLength: minLength(3) },
+      check: { required, minLength: minLength(3) },
     };
   },
   methods: {
@@ -213,6 +233,25 @@ export default {
     contact() {
       this.v$.$validate();
     },
+    sendEmail() {
+      this.v$.$validate();
+      emailjs
+        .sendForm(
+          "service_yo2jpxm",
+          "template_2hjg2t9",
+          this.$refs.form,
+          "VHOhXrkT_QpLT1pz6"
+        )
+        .then(
+          (result) => {
+            console.log("SUCCESS!", result.text);
+            this.message = "شكرا لتواصلك معنا سوف يتم الرد عليك ف اقرب وقت.";
+          },
+          (error) => {
+            console.log("FAILED...", error.text);
+          }
+        );
+    },
   },
 };
 </script>
@@ -220,5 +259,16 @@ export default {
 <style>
 textarea {
   background-color: #112031 !important;
+}
+.fixed {
+  width: 500px;
+  height: 500px;
+}
+@media only screen and (max-width: 600px) {
+  .fixed {
+    width: 300px;
+    height: 300px;
+    margin-top: 10px;
+  }
 }
 </style>

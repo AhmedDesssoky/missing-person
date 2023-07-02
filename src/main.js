@@ -16,6 +16,7 @@ import {
   faCheck,
   faPerson,
   faHeadset,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(
@@ -27,7 +28,8 @@ library.add(
   faGlasses,
   faCheck,
   faPerson,
-  faHeadset
+  faHeadset,
+  faEdit
 );
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)

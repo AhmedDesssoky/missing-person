@@ -11,13 +11,13 @@ function showTab(n) {
   } else {
     document.getElementById("prevBtn").style.display = "inline";
   }
-  if (n == (x.length - 1)) {
+  if (n == x.length - 1) {
     document.getElementById("nextBtn").innerHTML = "Submit";
   } else {
     document.getElementById("nextBtn").innerHTML = "Next";
   }
   // ... and run a function that displays the correct step indicator:
-  fixStepIndicator(n)
+  fixStepIndicator(n);
 }
 
 function nextPrev(n) {
@@ -41,7 +41,10 @@ function nextPrev(n) {
 
 function validateForm() {
   // This function deals with validation of the form fields
-  var x, y, i, valid = true;
+  var x,
+    y,
+    i,
+    valid = true;
   x = document.getElementsByClassName("tab");
   y = x[currentTab].getElementsByTagName("input");
   // A loop that checks every input field in the current tab:
@@ -63,7 +66,8 @@ function validateForm() {
 
 function fixStepIndicator(n) {
   // This function removes the "active" class of all steps...
-  var i, x = document.getElementsByClassName("step");
+  var i,
+    x = document.getElementsByClassName("step");
   for (i = 0; i < x.length; i++) {
     x[i].className = x[i].className.replace(" active", "");
   }

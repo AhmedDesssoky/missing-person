@@ -65,7 +65,7 @@
 
 <script>
 // import { mapActions } from "vuex";
-// import axios from "axios";
+import axios from "axios";
 import useValidate from "@vuelidate/core";
 import { required } from "@vuelidate/validators";
 export default {
@@ -73,6 +73,7 @@ export default {
     return {
       v$: useValidate(),
       file: null,
+      id: null,
     };
   },
   validations() {
@@ -93,9 +94,19 @@ export default {
     search() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        console.log("no error");
-      } else {
-        console.log("error");
+        axios.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
+        const image = this.file;
+        axios
+          .post(
+            "https://54f0-156-214-155-213.eu.ngrok.io/recognize_faces",
+            image
+          )
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
   },

@@ -16,8 +16,8 @@
     <nav class="navbar navbar-expand-lg">
       <router-link to="/" class="nav-link">
         <a
-          class="navbar-brand brand d-flex justify-content-center align-items-center"
-          ><img src="@/assets/missing.png" alt="" srcset="" class="logo"
+          class="navbar-brand brand d-flex justify-content-center align-items-center logo"
+          ><img src="@/assets/missing.png" alt="" srcset="" class="img-fluid"
         /></a>
       </router-link>
       <button
@@ -32,7 +32,12 @@
         <span><font-awesome-icon icon="bars" /> </span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link to="/ThePerson" class="nav-link"
+              >الأشخاص المفقودون
+            </router-link>
+          </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/missing-person"
               >بلّغ عن شخص مفقود</router-link
@@ -43,14 +48,6 @@
               >بحث عن شخص مفقود</router-link
             >
           </li>
-        </ul>
-
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <router-link to="/ThePerson" class="nav-link"
-              >الأشخاص المفقودون
-            </router-link>
-          </li>
           <li class="nav-item">
             <router-link to="/Aboutus" class="nav-link"> من نحن</router-link>
           </li>
@@ -60,20 +57,6 @@
             </router-link>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input
-            class="form-control mr-sm-2 rounded-pill"
-            type="search"
-            placeholder="ابحث عن شخص مفقود"
-            aria-label="Search"
-          />
-          <input
-            id="search"
-            class="m-2 my-sm-0 px-2 py-1 rounded-pill bg-transparent"
-            type="submit"
-            value="ابحث"
-          />
-        </form>
       </div>
     </nav>
   </section>
@@ -126,10 +109,9 @@ footer {
 .btn {
   text-align: center !important;
   color: white !important;
-  /* background-color: #345b63;
-  border-color: #d4ecdd; */
 }
 .logo {
-  height: 70px;
+  height: 60px;
+  width: 60px;
 }
 </style>
